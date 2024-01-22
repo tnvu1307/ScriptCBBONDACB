@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150029;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150029, '[-150029]: Số tiền không hợp lệ!', '[-150029]: Amount  is invalid!', 'ST', 0);COMMIT;

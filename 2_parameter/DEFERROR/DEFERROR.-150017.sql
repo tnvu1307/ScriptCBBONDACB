@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150017;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150017, '[-150017]: Số thứ tự thông tin phụ không hợp lệ!', '[-150017]: Serial number information is invalid!', 'ST', NULL);COMMIT;

@@ -1,0 +1,2 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -100547;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-100547, '[-100547]: Hệ thống chỉ tồn tại duy nhất một nguồn cho mỗi mã CK margin!', '[-100547]: The system exists only single source for each 
+margin securities code!', 'PR', NULL);COMMIT;

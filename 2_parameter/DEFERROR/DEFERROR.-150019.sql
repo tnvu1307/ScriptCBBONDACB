@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150019;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150019, '[-150019]: Ngày sinh phải bé hơn ngày hiện tại!', '[-150019]: Birthdays must be smaller than the current date!', 'ST', NULL);COMMIT;

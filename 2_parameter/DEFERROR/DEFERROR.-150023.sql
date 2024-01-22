@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150023;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150023, '[-150023]: Số tài khoản lưu ký bị trùng!', '[-150006]: Custodycd is duplicated!', 'ST', NULL);COMMIT;

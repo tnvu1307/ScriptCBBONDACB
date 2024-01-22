@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150006;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150006, '[-150006]: Số tài khoản lưu ký không hợp lệ!', '[-150006]: Custodycd is invalid!', 'ST', NULL);COMMIT;

@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150018;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150018, '[-150018]: Số tài khoản lưu ký bên nhận không hợp lệ!', '[-150018]: RECCUSTODY is invalid!', 'ST', NULL);COMMIT;

@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -102023;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-102023, '[-102023]: Dữ liệu đang được chỉnh sửa bởi user khác!', '[-102023]: Data is being edited by another user!', 'SA', NULL);COMMIT;

@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150031;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150031, '[-150031]: Loại nhà đầu tư không hợp lệ!', '[-150031]: Acctype is invalid!', 'ST', 0);COMMIT;

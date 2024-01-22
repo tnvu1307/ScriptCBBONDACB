@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -100300;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-100300, '[-100300]: Tài khoản không tồn tại trong hệ thống VSTP!', '[-100300]: Account does not exist in VSTP system!', 'CF', 0);COMMIT;

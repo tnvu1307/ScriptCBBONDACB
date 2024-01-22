@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM SYSVAR WHERE 1 = 1 AND NVL(VARNAME,'NULL') = NVL('AUTOUPDATE','NULL');Insert into SYSVAR   (GRNAME, VARNAME, VARVALUE, VARDESC, EN_VARDESC, EDITALLOW, DATATYPE, STATUS, PSTATUS) Values   ('SYSTEM', 'AUTOUPDATE', 'Y', 'Cho phep client cap nhat ban moi (Y/N)', 'Auto update new version', 'N', 'C', 'A', '');COMMIT;

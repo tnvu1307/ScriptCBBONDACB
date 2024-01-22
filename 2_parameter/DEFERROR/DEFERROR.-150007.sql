@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150007;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150007, '[-150007]: Mã đợt phát hành không được rỗng khi chứng khoán là loại WFT!', '[-150007]: Issue code is invalid when stock type WFT!', 'ST', NULL);COMMIT;

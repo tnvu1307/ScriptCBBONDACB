@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -100138;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-100138, '[-100138]: Số tiền còn lại nhỏ hơn số tiền tối thiểu!', '[-100138]: The remaining amount is less than the minimum amount!', 'SA', NULL);COMMIT;

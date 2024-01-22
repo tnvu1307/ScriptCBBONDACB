@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150005;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150005, '[-150005]: Số lượng không hợp lệ!', '[-150005]: Volume is invalid!', 'ST', NULL);COMMIT;

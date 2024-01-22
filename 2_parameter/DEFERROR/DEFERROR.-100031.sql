@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -100031;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-100031, '[-100031]: Giao dịch đã được duyệt vui lòng kiểm tra lại!', '[-100030]: ERR_SA_CHECKER2_OVR', 'SA', 0);COMMIT;

@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150012;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150012, '[-150012]: Loại hình sở hữu không hợp lệ!', '[-150012]: Alternate ID is invalid!', 'ST', NULL);COMMIT;

@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150003;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150003, '[-150003]: Nơi nhận phong tỏa không tồn tại!', '[-150003]: Place of blockade is not found!', 'ST', NULL);COMMIT;

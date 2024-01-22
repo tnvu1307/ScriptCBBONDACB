@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150027;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150027, '[-150027]: Ngày cấp giấy tờ phải bé hơn ngày hiện tại!', '[-150027]: IDDATE must be smaller than the current date!', 'ST', NULL);COMMIT;

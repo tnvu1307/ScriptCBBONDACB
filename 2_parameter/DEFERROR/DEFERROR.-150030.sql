@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150030;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150030, '[-150030]: Kết quả giao dịch đã được xác nhận!', '[-150030]: K?t qu? giao d?ch dã du?c xác nh?n!', 'ST', 0);COMMIT;

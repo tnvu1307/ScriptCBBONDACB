@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150033;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150033, '[-150033]: Lĩnh vực hoạt động không hợp lệ!', '[-150033]: ADTXINFO is invalid!', 'ST', 0);COMMIT;

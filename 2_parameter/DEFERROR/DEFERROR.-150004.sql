@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150004;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150004, '[-150004]: Mã chứng khoán không tồn tại!', '[-150004]: Symbol is not found!', 'ST', NULL);COMMIT;

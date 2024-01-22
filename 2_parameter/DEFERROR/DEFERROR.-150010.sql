@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150010;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150010, '[-150010]: Trường bắt buộc không thể để trống!', '[-150010]: Data is invalid!', 'ST', NULL);COMMIT;

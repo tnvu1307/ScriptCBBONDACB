@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -102022;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-102022, '[-102022]: Giá trị mới phải khác giá trị cũ!', '[-102022]: New values must be difference old values !', 'SA', NULL);COMMIT;

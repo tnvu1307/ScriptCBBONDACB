@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150001;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150001, '[-150001]: Không tìm thấy số hiệu xác nhận!', '[-150001]: The reference ID is not found!', 'ST', NULL);COMMIT;

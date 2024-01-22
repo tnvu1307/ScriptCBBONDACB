@@ -1,0 +1,68 @@
+SET DEFINE OFF;
+CREATE OR REPLACE TRIGGER TRG_TLLOG_AFTER 
+ AFTER 
+ INSERT OR UPDATE
+ ON TLLOG
+ REFERENCING OLD AS OLDVAL NEW AS NEWVAL
+ FOR EACH ROW
+DECLARE
+    PKGCTX PLOG.LOG_CTX;
+    L_SEARCH VARCHAR2(100);
+    L_COUNT NUMBER;
+    
+BEGIN
+
+    PLOG.SETBEGINSECTION(PKGCTX, 'TRG_TLLOG_AFTER');
+    --VSD MSG
+    IF :NEWVAL.DELTD <> 'Y' AND :NEWVAL.TXSTATUS = '1' --AND (:OLDVAL.TXSTATUS IS NULL OR :OLDVAL.TXSTATUS <> '1') 
+    THEN
+        SELECT COUNT(1) INTO L_COUNT
+        FROM VSDTRFCODE VSD 
+        WHERE VSD.TLTXCD =: NEWVAL.TLTXCD 
+        AND VSD.STATUS = 'Y' 
+        AND VSD.TYPE IN ('REQ','EXREQ');
+        
+        IF L_COUNT > 0 THEN
+            L_SEARCH := '%%';
+            IF INSTR('/1503/1504/1505/1507/1603/1604/1605/1607/', :NEWVAL.TLTXCD) > 0 THEN
+                SELECT (CASE WHEN INSTR(SYMBOL, '_WFT') > 0 THEN '%CLAS//PEND%'
+                       ELSE '%CLAS//NORM%'
+                       END)
+                INTO L_SEARCH
+                FROM SBSECURITIES
+                WHERE CODEID = :NEWVAL.CCYUSAGE;
+            ELSIF INSTR('/1506/', :NEWVAL.TLTXCD) > 0 THEN
+                SELECT '%' || CVALUE || '%' 
+                INTO L_SEARCH
+                FROM TLLOGFLD 
+                WHERE TXNUM = :NEWVAL.TXNUM 
+                AND TXDATE = :NEWVAL.TXDATE 
+                AND FLDCD = '32';
+            ELSIF INSTR('/1701/1702/', :NEWVAL.TLTXCD) > 0 THEN
+                SELECT '%' || CVALUE || '%' 
+                INTO L_SEARCH
+                FROM TLLOGFLD 
+                WHERE TXNUM = :NEWVAL.TXNUM 
+                AND TXDATE = :NEWVAL.TXDATE 
+                AND FLDCD = '55';
+            END IF;
+            FOR REC IN (
+                SELECT TRFCODE 
+                FROM VSDTRFCODE 
+                WHERE TLTXCD = :NEWVAL.TLTXCD 
+                AND STATUS = 'Y' 
+                AND TYPE = 'REQ' 
+                AND TRFCODE LIKE L_SEARCH
+            )
+            LOOP
+                INSERT INTO VSD_PROCESS_LOG(AUTOID,TRFCODE,TLTXCD,TXNUM,TXDATE,PROCESS,MSGACCT,BRID,TLID)
+                VALUES (SEQ_VSD_PROCESS_LOG.NEXTVAL,REC.TRFCODE,:NEWVAL.TLTXCD,:NEWVAL.TXNUM,GETCURRDATE,'N',NVL(:NEWVAL.CFCUSTODYCD, :NEWVAL.MSGACCT),:NEWVAL.BRID,:NEWVAL.TLID);
+            END LOOP;
+        END IF;
+    END IF;
+EXCEPTION
+  WHEN OTHERS THEN
+    plog.error (pkgctx, SQLERRM || dbms_utility.format_error_backtrace);
+    PLOG.SETENDSECTION(PKGCTX, 'TRG_TLLOG_AFTER');
+END;
+/

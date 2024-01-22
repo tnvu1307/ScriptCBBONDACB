@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150021;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150021, '[-150021]: Biccode bên nhận không hợp lệ!', '[-150021]: Biccode receive is invalid!', 'ST', NULL);COMMIT;

@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150014;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150014, '[-150014]: Loại chuyển khoản không hợp lệ!', '[-150014]: Transfer type is invalid!', 'ST', NULL);COMMIT;

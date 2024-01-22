@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150997;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150997, '[-150997]: Ngày hợp đồng phải là ngày làm việc !', '[-150997]: Contract date must be working date !', 'ST', NULL);COMMIT;

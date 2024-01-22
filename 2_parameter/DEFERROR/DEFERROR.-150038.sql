@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150038;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150038, '[-150038]: Ngày cấp không hợp lệ!', '[-150038]: IDDATE is invalid!', 'ST', 0);COMMIT;

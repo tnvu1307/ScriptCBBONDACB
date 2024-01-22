@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -100706;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-100706, '[-100706]: Mật khẩu củ không đúng', '[-100706]: Old password invalid ', 'SA', 0);COMMIT;

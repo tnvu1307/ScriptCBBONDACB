@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150022;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150022, '[-150022]: Độ dài dữ liệu không hợp lệ!', '[-150022]: Length data is invalid!', 'ST', NULL);COMMIT;

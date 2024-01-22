@@ -1,0 +1,1 @@
+SET DEFINE OFF;DELETE FROM DEFERROR WHERE 1 = 1 AND ERRNUM = -150026;Insert into DEFERROR   (ERRNUM, ERRDESC, EN_ERRDESC, MODCODE, CONFLVL) Values   (-150026, '[-150026]: Mgày hiện tại phải trùng với ngày hệ thống!', '[-150026]: TXDATE is invalid!', 'ST', NULL);COMMIT;
