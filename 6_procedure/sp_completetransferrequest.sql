@@ -75,7 +75,7 @@ begin
                         L_DATA := L_DATA || '"VSDORDERID":"' || REC.VSDORDERID || '",';
                         L_DATA := L_DATA || '"STATUS":"' || REC.STATUS || '"';
                         L_DATA := L_DATA || '}';
-                        HOSTCB.CSPKS_VSTP.PRC_8822_8823_CALLBACK(L_DATA, l_err);
+                        CBACB.CSPKS_VSTP.PRC_8822_8823_CALLBACK(L_DATA, l_err);
                         if l_err <> systemnums.C_SUCCESS then
                             plog.error (pkgctx, SQLERRM || dbms_utility.format_error_backtrace);
                         end if;

@@ -1,4 +1,3 @@
-SET DEFINE OFF;
 CREATE OR REPLACE PACKAGE cspks_vsd AS
     FUNCTION FN_GET_VSD_REQUEST(F_REQID IN NUMBER, F_PAGENO IN NUMBER) RETURN VARCHAR; --??C THONG TIN CUA YEU CAU DUA THANH XML THU VIEN
     PROCEDURE SP_AUTO_CREATE_MESSAGE; --THU TUC TAO DIEN MT TU DONG
@@ -17,7 +16,6 @@ CREATE OR REPLACE PACKAGE cspks_vsd AS
     FUNCTION SPLITSTRING(PV_STRING IN VARCHAR2) RETURN VARCHAR2;
 END CSPKS_VSD;
 /
-
 
 CREATE OR REPLACE PACKAGE BODY cspks_vsd as
 
@@ -483,7 +481,7 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
         L_ERR_CODE VARCHAR2(100);
     BEGIN
         plog.setbeginsection(pkgctx, 'auto_process_inf_message');
-        
+
 
         v_currdate := getcurrdate;
 
@@ -712,7 +710,7 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                         L_DATA := L_DATA || '"VSDORDERID":"' || REC_TPRL.FLDVAL || '"';
                         L_DATA := L_DATA || '}';
 
-                        HOSTCB.CSPKS_VSTP.PRC_VSDCONFIRM_MT544(L_DATA, L_ERR_CODE);
+                        CBACB.CSPKS_VSTP.PRC_VSDCONFIRM_MT544(L_DATA, L_ERR_CODE);
                         IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
                             plog.error (pkgctx, SQLERRM || dbms_utility.format_error_backtrace);
                         END IF;
@@ -771,7 +769,7 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                         L_DATA := L_DATA || '"VSDORDERID":"' || REC_TPRL.FLDVAL || '"';
                         L_DATA := L_DATA || '}';
 
-                        HOSTCB.CSPKS_VSTP.PRC_VSDCONFIRM_MT546(L_DATA, L_ERR_CODE);
+                        CBACB.CSPKS_VSTP.PRC_VSDCONFIRM_MT546(L_DATA, L_ERR_CODE);
                         IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
                             plog.error (pkgctx, SQLERRM || dbms_utility.format_error_backtrace);
                         END IF;
@@ -1302,14 +1300,14 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                 where map.objname = v_tltxcd
                 and map.trfcode = v_trfcode;
             exception when no_data_found then
-                
+
                 plog.setendsection(pkgctx, 'sp_gen_vsd_req');
                 return;
             end;
 
             --Giao dich co lua chon khong sinh dien
             IF NOT instr(fn_eval_amtexp(v_txnum, v_chartxdate, v_fldkeysend, 'C'),v_valuesend) > 0 THEN
-                
+
                 plog.setendsection(pkgctx, 'sp_gen_vsd_req');
                 RETURN;
             END IF;
@@ -1319,7 +1317,7 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                 v_txamt := fn_eval_amtexp(v_txnum, v_chartxdate, v_txamt_field, 'C');
                 if v_txamt = 0 then
                     -- neu so luong bang 0, khong sinh request len VSD
-                    
+
                     plog.setendsection(pkgctx, 'sp_gen_vsd_req');
                     return;
                 end if;
@@ -1391,7 +1389,7 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
             insert into vsdtxreqdtl (autoid, reqid, fldname, cval, nval)
             values (seq_crbtxreqdtl.nextval, l_vsdtxreq, 'VSDCODE', l_vsdbiccode, 0);
             -- Detail
-            
+
 
             for rc in (
                 select objname, trfcode, fldname, fldtype, amtexp, cmdsql, SPLIT, convert, maxlength
@@ -1404,7 +1402,7 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
             begin
                 if not rc.amtexp is null AND rc.amtexp != 'LOOPDETAIL' then
                     v_value := fn_eval_amtexp(v_txnum, v_chartxdate, rc.amtexp, rc.fldtype);
-                    
+
                 end if;
                 if not rc.cmdsql is null then
                 begin
@@ -1419,7 +1417,7 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                         close c0;
                     exception when others then
                         v_value := '';
-                        
+
                     end;
                 end;
                 end if;
@@ -1477,7 +1475,7 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
         L_ERR_CODE VARCHAR2(100);
     BEGIN
         PLOG.SETBEGINSECTION(PKGCTX, 'AUTO_COMPLETE_CONFIRM_MSG');
-        
+
         CASE PV_CFTLTXCD
         WHEN 'CFO1704' THEN
             BEGIN
@@ -1495,10 +1493,10 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                     L_DATA := L_DATA || '"STATUS":"C"';
                     L_DATA := L_DATA || '}';
 
-                    HOSTCB.CSPKS_VSTP.PRC_8821_CALLBACK(L_DATA, L_ERR_CODE);
+                    CBACB.CSPKS_VSTP.PRC_8821_CALLBACK(L_DATA, L_ERR_CODE);
                     IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
-                        
-                        
+
+
                         RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_2303_CALLBACK ERROR: ' || L_ERR_CODE);
                     END IF;
                 EXCEPTION WHEN OTHERS THEN
@@ -1523,10 +1521,10 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                     L_DATA := L_DATA || '"STATUS":"R"';
                     L_DATA := L_DATA || '}';
 
-                    HOSTCB.CSPKS_VSTP.PRC_8821_CALLBACK(L_DATA, L_ERR_CODE);
+                    CBACB.CSPKS_VSTP.PRC_8821_CALLBACK(L_DATA, L_ERR_CODE);
                     IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
-                        
-                        
+
+
                         RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_2303_CALLBACK ERROR: ' || L_ERR_CODE);
                     END IF;
                 EXCEPTION WHEN OTHERS THEN
@@ -1636,10 +1634,10 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                         L_DATA := L_DATA || '"STATUS":"C"';
                         L_DATA := L_DATA || '}';
 
-                        HOSTCB.CSPKS_VSTP.PRC_2318_CALLBACK(L_DATA, L_ERR_CODE);
+                        CBACB.CSPKS_VSTP.PRC_2318_CALLBACK(L_DATA, L_ERR_CODE);
                         IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
-                            
-                            
+
+
                             RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_2318_CALLBACK ERROR: ' || L_ERR_CODE);
                         END IF;
                     EXCEPTION WHEN OTHERS THEN
@@ -1658,10 +1656,10 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                     L_DATA := L_DATA || '"STATUS":"R"';
                     L_DATA := L_DATA || '}';
 
-                    HOSTCB.CSPKS_VSTP.PRC_2318_CALLBACK(L_DATA, L_ERR_CODE);
+                    CBACB.CSPKS_VSTP.PRC_2318_CALLBACK(L_DATA, L_ERR_CODE);
                     IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
-                        
-                        
+
+
                         RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_2318_CALLBACK ERROR: ' || L_ERR_CODE);
                     END IF;
                 EXCEPTION WHEN OTHERS THEN
@@ -1693,10 +1691,10 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                     L_DATA := L_DATA || '"STATUS":"C"';
                     L_DATA := L_DATA || '}';
 
-                    HOSTCB.CSPKS_VSTP.PRC_2323_CALLBACK(L_DATA, L_ERR_CODE);
+                    CBACB.CSPKS_VSTP.PRC_2323_CALLBACK(L_DATA, L_ERR_CODE);
                     IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
-                        
-                        
+
+
                         RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_2323_CALLBACK ERROR: ' || L_ERR_CODE);
                     END IF;
                 EXCEPTION WHEN OTHERS THEN
@@ -1714,10 +1712,10 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                     L_DATA := L_DATA || '"STATUS":"R"';
                     L_DATA := L_DATA || '}';
 
-                    HOSTCB.CSPKS_VSTP.PRC_2323_CALLBACK(L_DATA, L_ERR_CODE);
+                    CBACB.CSPKS_VSTP.PRC_2323_CALLBACK(L_DATA, L_ERR_CODE);
                     IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
-                        
-                        
+
+
                         RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_2323_CALLBACK ERROR: ' || L_ERR_CODE);
                     END IF;
                 EXCEPTION WHEN OTHERS THEN
@@ -1735,10 +1733,10 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                     L_DATA := L_DATA || '"STATUS":"R"';
                     L_DATA := L_DATA || '}';
 
-                    HOSTCB.CSPKS_VSTP.PRC_2303_CALLBACK(L_DATA, L_ERR_CODE);
+                    CBACB.CSPKS_VSTP.PRC_2303_CALLBACK(L_DATA, L_ERR_CODE);
                     IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
-                        
-                        
+
+
                         RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_2303_CALLBACK ERROR: ' || L_ERR_CODE);
                     END IF;
                 EXCEPTION WHEN OTHERS THEN
@@ -1756,10 +1754,10 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                     L_DATA := L_DATA || '"STATUS":"C"';
                     L_DATA := L_DATA || '}';
 
-                    HOSTCB.CSPKS_VSTP.PRC_2303_CALLBACK(L_DATA, L_ERR_CODE);
+                    CBACB.CSPKS_VSTP.PRC_2303_CALLBACK(L_DATA, L_ERR_CODE);
                     IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
-                        
-                        
+
+
                         RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_2303_CALLBACK ERROR: ' || L_ERR_CODE);
                     END IF;
                 EXCEPTION WHEN OTHERS THEN
@@ -1777,10 +1775,10 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                     L_DATA := L_DATA || '"STATUS":"R"';
                     L_DATA := L_DATA || '}';
 
-                    HOSTCB.CSPKS_VSTP.PRC_2308_CALLBACK(L_DATA, L_ERR_CODE);
+                    CBACB.CSPKS_VSTP.PRC_2308_CALLBACK(L_DATA, L_ERR_CODE);
                     IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
-                        
-                        
+
+
                         RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_2308_CALLBACK ERROR: ' || L_ERR_CODE);
                     END IF;
                 EXCEPTION WHEN OTHERS THEN
@@ -1798,10 +1796,10 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                     L_DATA := L_DATA || '"STATUS":"C"';
                     L_DATA := L_DATA || '}';
 
-                    HOSTCB.CSPKS_VSTP.PRC_2308_CALLBACK(L_DATA, L_ERR_CODE);
+                    CBACB.CSPKS_VSTP.PRC_2308_CALLBACK(L_DATA, L_ERR_CODE);
                     IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
-                        
-                        
+
+
                         RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_2308_CALLBACK ERROR: ' || L_ERR_CODE);
                     END IF;
                 EXCEPTION WHEN OTHERS THEN
@@ -1819,10 +1817,10 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                     L_DATA := L_DATA || '"STATUS":"R"';
                     L_DATA := L_DATA || '}';
 
-                    HOSTCB.CSPKS_VSTP.PRC_2313_CALLBACK(L_DATA, L_ERR_CODE);
+                    CBACB.CSPKS_VSTP.PRC_2313_CALLBACK(L_DATA, L_ERR_CODE);
                     IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
-                        
-                        
+
+
                         RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_2313_CALLBACK ERROR: ' || L_ERR_CODE);
                     END IF;
                 EXCEPTION WHEN OTHERS THEN
@@ -1840,10 +1838,10 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                     L_DATA := L_DATA || '"STATUS":"C"';
                     L_DATA := L_DATA || '}';
 
-                    HOSTCB.CSPKS_VSTP.PRC_2313_CALLBACK(L_DATA, L_ERR_CODE);
+                    CBACB.CSPKS_VSTP.PRC_2313_CALLBACK(L_DATA, L_ERR_CODE);
                     IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
-                        
-                        
+
+
                         RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_2313_CALLBACK ERROR: ' || L_ERR_CODE);
                     END IF;
                 EXCEPTION WHEN OTHERS THEN
@@ -1861,10 +1859,10 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                     L_DATA := L_DATA || '"STATUS":"C"';
                     L_DATA := L_DATA || '}';
 
-                    HOSTCB.CSPKS_VSTP.PRC_3401_CALLBACK(L_DATA, L_ERR_CODE);
+                    CBACB.CSPKS_VSTP.PRC_3401_CALLBACK(L_DATA, L_ERR_CODE);
                     IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
-                        
-                        
+
+
                         RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_3401_CALLBACK ERROR: ' || L_ERR_CODE);
                     END IF;
                 EXCEPTION WHEN OTHERS THEN
@@ -1882,10 +1880,10 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                     L_DATA := L_DATA || '"STATUS":"R"';
                     L_DATA := L_DATA || '}';
 
-                    HOSTCB.CSPKS_VSTP.PRC_3403_CALLBACK(L_DATA, L_ERR_CODE);
+                    CBACB.CSPKS_VSTP.PRC_3403_CALLBACK(L_DATA, L_ERR_CODE);
                     IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
-                        
-                        
+
+
                         RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_3403_CALLBACK ERROR: ' || L_ERR_CODE);
                     END IF;
                 EXCEPTION WHEN OTHERS THEN
@@ -1903,10 +1901,10 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
                     L_DATA := L_DATA || '"STATUS":"C"';
                     L_DATA := L_DATA || '}';
 
-                    HOSTCB.CSPKS_VSTP.PRC_3403_CALLBACK(L_DATA, L_ERR_CODE);
+                    CBACB.CSPKS_VSTP.PRC_3403_CALLBACK(L_DATA, L_ERR_CODE);
                     IF L_ERR_CODE <> SYSTEMNUMS.C_SUCCESS THEN
-                        
-                        
+
+
                         RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_3403_CALLBACK ERROR: ' || L_ERR_CODE);
                     END IF;
                 EXCEPTION WHEN OTHERS THEN
@@ -2117,7 +2115,7 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
             L_DATA := L_DATA || '"VSDORDERID":"' || REC.VSDORDERID || '",';
             L_DATA := L_DATA || '"DEPOSITID":"' || REC.DEPOSITID || '"';
             L_DATA := L_DATA || '}';
-            HOSTCB.CSPKS_VSTP.PRC_ODVSTP_NEW(L_DATA, L_ERRCODE);
+            CBACB.CSPKS_VSTP.PRC_ODVSTP_NEW(L_DATA, L_ERRCODE);
             IF L_ERRCODE <> SYSTEMNUMS.C_SUCCESS THEN
                 RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_CALL_8864 ERROR: ' || L_ERRCODE);
             END IF;
@@ -2155,8 +2153,8 @@ CREATE OR REPLACE PACKAGE BODY cspks_vsd as
             L_DATA := '{';
             L_DATA := L_DATA || '"VSDORDERID":"' || REC.VSDORDERID || '"';
             L_DATA := L_DATA || '}';
-            
-            HOSTCB.CSPKS_VSTP.PRC_ODVSTP_CANC(L_DATA, L_ERRCODE);
+
+            CBACB.CSPKS_VSTP.PRC_ODVSTP_CANC(L_DATA, L_ERRCODE);
             IF L_ERRCODE <> SYSTEMNUMS.C_SUCCESS THEN
                 RAISE_APPLICATION_ERROR(-20001, 'CALL PRC_ODVSD_CANC ERROR: ' || L_ERRCODE);
             END IF;
